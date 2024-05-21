@@ -16,7 +16,7 @@ body {
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     text-align: center;
-    color: #333; /* Dark Text Color */
+    color: #333;
 }
 
 h1 {
@@ -31,12 +31,12 @@ button {
     font-size: 16px;
     border: none;
     border-radius: 5px;
-    background-color: #00695c; /* Button Background Color */
+    background-color: #00695c;
     color: white;
 }
 
 button:hover {
-    background-color: #004d40; /* Darker Button Background Color on Hover */
+    background-color: #004d40;
 }
 
 #change-due {
@@ -44,11 +44,11 @@ button:hover {
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 5px;
-    color: white; /* Text Color for Change Due Message */
+    color: white;
 }
 
 #cash-in-drawer {
     text-align: left;
     margin-top: 20px;
-    color: #333; /* Dark Text Color */
+    color: #333;
 }
