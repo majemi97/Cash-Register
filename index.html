@@ -1,103 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Change Calculator</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Register</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<div class="container">
-  <h1>Change Calculator</h1>
-  <input type="number" id="cash" placeholder="Enter cash amount">
-  <button id="purchase-btn">Purchase</button>
-  <div id="change-due"></div>
-  <div id="cash-in-drawer" class="cash-register">
-    <div class="cash-register-display">
-      <p><strong>Cash in Drawer:</strong></p>
-      <!-- Cash in drawer values will be populated here -->
+    <div class="container">
+        <h1>Cash Register</h1>
+        <input type="number" id="price" placeholder="Item Price" step="0.01">
+        <input type="number" id="cash" placeholder="Cash Given" step="0.01">
+        <button id="purchase-btn">Complete Purchase</button>
+        <div id="change-due"></div>
     </div>
-  </div>
-</div>
 
-<script>
-const cashInput = document.getElementById('cash');
-const changeDue = document.getElementById('change-due');
-const purchaseBtn = document.getElementById('purchase-btn');
-const cidDisplay = document.getElementById('cash-in-drawer'); 
-
-// Declaring cid and price globally
-let cid = [
-  ["PENNY", 0.5],
-  ["NICKEL", 0],
-  ["DIME", 0],
-  ["QUARTER", 0],
-  ["ONE", 0],
-  ["FIVE", 0],
-  ["TEN", 0],
-  ["TWENTY", 0],
-  ["ONE HUNDRED", 0]
-];
-let price = 19.5;
-
-const purchaseCalculation = () => {
-  let cash = parseFloat(cashInput.value);
-  let change = cash - price;
-
-  if (cash < price) {
-    alert('Customer does not have enough money to purchase the item');
-    return;
-  } 
-  
-  if (cash === price) {
-    changeDue.textContent = "No change due - customer paid with exact cash";
-    return;
-  } 
-
-  let changeArr = [];
-  let cidTotal = 0;
-  for (let [_, amount] of cid) {
-    cidTotal += amount;
-  }
-
-  if (change > cidTotal) {
-    changeDue.textContent = "Status: INSUFFICIENT_FUNDS";
-    return;
-  } else if (change === cidTotal) {
-    changeDue.textContent = "Status: CLOSED";
-    return;
-  }
-
-  for (let i = cid.length - 1; i >= 0; i--) {
-    const [unit, unitValue] = cid[i];
-    while (unitValue > 0 && change >= unitValue) {
-      changeArr.push([unit, unitValue]);
-      change -= unitValue;
-      cid[i][1] -= unitValue;
-      change = Math.round(change * 100) / 100;
-    }
-  }
-  
-  // Check if change due is zero
-  if (change === 0) {
-    let changeMessage = "Status: CLOSED ";
-    for (let i = 0; i < changeArr.length; i++) {
-      changeMessage += `${changeArr[i][0]}: $${changeArr[i][1]} `;
-    }
-    changeDue.textContent = changeMessage;
-  } else {
-    changeDue.textContent = "Status: INSUFFICIENT_FUNDS";
-  }
-};
-
-purchaseBtn.addEventListener("click", purchaseCalculation);
-
-cidDisplay.innerHTML = "<p><strong>Cash in Drawer:</strong></p>";
-cid.forEach(item => {
-  cidDisplay.innerHTML += `<p>${item[0]}: $${item[1]}</p>`;
-});
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
