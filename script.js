@@ -1,94 +1,53 @@
-const cashInput = document.getElementById('cash');
-const changeDue = document.getElementById('change-due');
-const purchaseBtn = document.getElementById('purchase-btn');
-const cidDisplay = document.getElementById('cash-in-drawer'); 
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
 
-// Declaring cid, price, and cash globally
-let cid = [
-  ["PENNY", 0.5],
-  ["NICKEL", 0],
-  ["DIME", 0],
-  ["QUARTER", 0],
-  ["ONE", 0],
-  ["FIVE", 0],
-  ["TEN", 0],
-  ["TWENTY", 0],
-  ["ONE HUNDRED", 0]
-];
-let price = 19.5;
-let cash; // Variable to store the cash provided by the customer
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
 
-const currencyValues = {
-  "PENNY": 0.01,
-  "NICKEL": 0.05,
-  "DIME": 0.1,
-  "QUARTER": 0.25,
-  "ONE": 1,
-  "FIVE": 5,
-  "TEN": 10,
-  "TWENTY": 20,
-  "ONE HUNDRED": 100
-};
+h1 {
+    margin-bottom: 20px;
+}
 
-const purchaseCalculation = () => {
-  cash = parseFloat(cashInput.value);
-  let change = cash - price;
+input {
+    margin: 10px 0;
+    padding: 10px;
+    width: calc(100% - 20px);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 
-  if (cash < price) {
-    alert('Customer does not have enough money to purchase the item');
-    return;
-  } 
-  
-  if (cash === price) {
-    changeDue.textContent = "No change due - customer paid with exact cash";
-    return;
-  } 
+button {
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background-color: #5cb85c;
+    color: #fff;
+    font-size: 16px;
+}
 
-  let changeArr = [];
-  let cidTotal = cid.reduce((total, [unit, amount]) => total + amount, 0);
-  cidTotal = Math.round(cidTotal * 100) / 100;
+button:hover {
+    background-color: #4cae4c;
+}
 
-  if (change > cidTotal) {
-    changeDue.textContent = "Status: INSUFFICIENT_FUNDS";
-    return;
-  } else if (change === cidTotal) {
-    changeDue.textContent = "Status: CLOSED";
-    return;
-  }
-
-  for (let i = cid.length - 1; i >= 0; i--) {
-    let [unit, amount] = cid[i];
-    let unitValue = currencyValues[unit];
-    let amountToReturn = 0;
-
-    while (change >= unitValue && amount > 0) {
-      change -= unitValue;
-      change = Math.round(change * 100) / 100; // Fix float point precision
-      amount -= unitValue;
-      amountToReturn += unitValue;
-    }
-
-    if (amountToReturn > 0) {
-      changeArr.push([unit, amountToReturn]);
-    }
-  }
-  
-  // Check if change due is zero
-  if (change === 0) {
-    let changeMessage = "Status: OPEN ";
-    for (let i = 0; i < changeArr.length; i++) {
-      changeMessage += `${changeArr[i][0]}: $${changeArr[i][1].toFixed(2)} `;
-    }
-    changeDue.textContent = changeMessage;
-  } else {
-    changeDue.textContent = "Status: INSUFFICIENT_FUNDS";
-  }
-};
-
-purchaseBtn.addEventListener("click", purchaseCalculation);
-
-cidDisplay.innerHTML = "<p><strong>Cash in Drawer:</strong></p>";
-cid.forEach(item => {
-  cidDisplay.innerHTML += `<p>${item[0]}: $${item[1].toFixed(2)}</p>`;
-});
-
+#change-due {
+    margin-top: 20px;
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
