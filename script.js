@@ -29,6 +29,14 @@ const currencyValues = {
   "ONE HUNDRED": 100
 };
 
+const populateCashInDrawer = () => {
+  let cashInDrawerHTML = "<p><strong>Cash in Drawer:</strong></p>";
+  cid.forEach(item => {
+    cashInDrawerHTML += `<p>${item[0]}: $${item[1].toFixed(2)}</p>`;
+  });
+  cidDisplay.innerHTML = cashInDrawerHTML;
+};
+
 const purchaseCalculation = () => {
   cash = parseFloat(cashInput.value);
   let change = cash - price;
@@ -90,7 +98,4 @@ const purchaseCalculation = () => {
 
 purchaseBtn.addEventListener("click", purchaseCalculation);
 
-cidDisplay.innerHTML = "<p><strong>Cash in Drawer:</strong></p>";
-cid.forEach(item => {
-  cidDisplay.innerHTML += `<p>${item[0]}: $${item[1].toFixed(2)}</p>`;
-});
+populateCashInDrawer();
